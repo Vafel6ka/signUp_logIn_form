@@ -1,5 +1,5 @@
 import React from "react";
-import  { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import  { View, Text, StyleSheet } from "react-native";
 import Parse from 'parse/react-native.js';
 import InputTextArea from "./styleComponents/InputTextArea";
 import SubmitBtn from "./styleComponents/SubmitBtn";
@@ -11,23 +11,21 @@ import getEmail from "../store/actions/getEmail";
 
 const SignUpForm = (props) => {
 
-  const Person = Parse.Object.extend('Person');
-
   function signUp() {
-    // Create a new instance of the user class
-    var user = new Parse.User();
-    user.set("username", props.login.toString());
-    user.set("password", props.password.toString());
-    user.set("email", props.email.toString());
+  // Create a new instance of the user class
+  let user = new Parse.User();
+  user.set("username", props.login.toString());
+  user.set("password", props.password.toString());
+  user.set("email", props.email.toString());
   
-    // other fields can be set just like with Parse.Object
-    //user.set("phone", "415-392-0202");
+  // other fields can be set just like with Parse.Object
+  //user.set("phone", "415-392-0202");
   
-    user.signUp().then(function(user) {
-        console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
-    }).catch(function(error){
-        console.log("Error: " + error.code + " " + error.message);
-    });
+  user.signUp().then(function(user) {
+      console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
+  }).catch(function(error){
+      console.log("Error: " + error.code + " " + error.message);
+  });
 }
 
     return (
@@ -69,8 +67,7 @@ const mapDispatchToProps = (dispatch)=> {
   return {
     getLoginFn: (data) => dispatch(getLogin(data)),
     getPassFn: (data) => dispatch(getPass(data)),
-    getEmailFn: (data) => dispatch(getEmail(data)),
-
+    getEmailFn: (data) => dispatch(getEmail(data))
   }
 }
 
