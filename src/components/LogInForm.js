@@ -7,6 +7,7 @@ import { connect } from "react-redux"
 import getLogin from "../store/actions/getLogin";
 import getPass from "../store/actions/getPass";
 import getEmail from "../store/actions/getEmail";
+import Colors from "../constants/colors"
 
 const LogIn = (props) => {
   
@@ -14,7 +15,8 @@ const LogIn = (props) => {
     let user = Parse.User.logIn(props.username.toString(), props.password.toString())
       .then(user => {
         console.log('We get '+ user.get("username") + ' and his email: ' + user.get("email"))
-        props.navigation.navigate('MainBodyScreen')
+        props.navigation.navigate('MainBodyScreen');
+        console.log(props.all)
     })
       .catch (error => {
         console.log(error, "Error!!!");
@@ -30,7 +32,8 @@ const LogIn = (props) => {
 
             {/* <InputTextArea placeholder="email"/> */}
 
-            <InputTextArea  placeholder = "password"
+            <InputTextArea  secureTextEntry={true}
+                            placeholder = "password"
                             onChangeText = {data => props.getPassFn(data)}/>
 
             <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => props.navigation.navigate('ResetPassword')}>
@@ -63,7 +66,8 @@ const styled = StyleSheet.create({
     wrapper:{
       flex:1,
       alignItems:"center",
-      justifyContent:"center"
+      justifyContent:"center",
+      backgroundColor: Colors.mainBGcolor
     },
     title:{
       fontSize:26,

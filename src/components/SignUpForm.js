@@ -1,5 +1,5 @@
 import React from "react";
-import  { View, Text, StyleSheet } from "react-native";
+import  { View, Text, StyleSheet, Alert } from "react-native";
 import Parse from 'parse/react-native.js';
 import InputTextArea from "./styleComponents/InputTextArea";
 import SubmitBtn from "./styleComponents/SubmitBtn";
@@ -8,6 +8,7 @@ import { connect } from "react-redux"
 import getLogin from "../store/actions/getLogin";
 import getPass from "../store/actions/getPass";
 import getEmail from "../store/actions/getEmail";
+import Colors from "../constants/colors"
 
 const SignUpForm = (props) => {
 
@@ -23,33 +24,36 @@ const SignUpForm = (props) => {
   
   user.signUp().then(function(user) {
       console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
+      Alert.alert('Message', 'You was registrated successfully!')
   }).catch(function(error){
       console.log("Error: " + error.code + " " + error.message);
+      Alert.alert('Error', 'Something wrong! Try again...')
   });
   console.log(props.all);
 }
 
     return (
-        <View style={styled.wrapper}>
-            <Text style={styled.title}> SignUp </Text>
+        <View style = {styled.wrapper}>
+            <Text style = {styled.title}> SignUp </Text>
             
             <InnerText>Set username</InnerText>
             <InputTextArea 
-              placeholder="username"
+              placeholder = "username"
               onChangeText = {data => props.getLoginFn(data)}
               />
       
             <InnerText>Set password</InnerText>
-            <InputTextArea 
+            <InputTextArea
+              secureTextEntry={true}  
               placeholder = "pasword"
               onChangeText = {data => props.getPassFn(data)}/>
             
             <InnerText>Set email</InnerText>
             <InputTextArea
-              type =""
+              keyboardType = "email-address"
               placeholder = "email"
               onChangeText = {data => props.getEmailFn(data)}
-              />
+              spellCheck = "false"/>
 
             <SubmitBtn  text="Confirm" onPress={signUp}/>
             
@@ -78,7 +82,8 @@ const styled = StyleSheet.create({
     wrapper: {
       flex:1,
       alignItems:"center",
-      justifyContent:"center"
+      justifyContent:"center",
+      backgroundColor: Colors.mainBGcolor
     },
     title: {
       margin:10,

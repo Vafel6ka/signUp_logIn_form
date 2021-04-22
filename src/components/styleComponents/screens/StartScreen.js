@@ -1,5 +1,6 @@
 import React from "react";
 import  { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import Colors from "../../../constants/colors"
 
 const StartScreen = (props) => {
   
@@ -12,10 +13,12 @@ const StartScreen = (props) => {
 
                 <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => props.navigation.navigate('SignUpForm')}>
                     <Text style = {styled.chgPassText}>SignUp</Text>
-                </TouchableOpacity>
-            
+                </TouchableOpacity>           
             </View>
-            <Text style = {styled.title}> Start screen!!! </Text>
+
+            <View style={styled.titleBlock}>
+                <Text style = {styled.title}> Start screen!!! </Text>
+            </View>
         </View>
     )
 }
@@ -24,15 +27,22 @@ export default StartScreen;
 
 const styled = StyleSheet.create({
     wrapper:{
-      flex: 1
+      flex: 1,
+      backgroundColor: Colors.mainBGcolor
+    },
+    titleBlock: {
+        flex:0.93,
+        alignItems: "center",
+        justifyContent:"center",
     },
     title:{
       fontSize: 26,
       alignSelf: "center",
-      justifyContent:"center"
+      paddingBottom: '20%'
     },
     btnBlock: {
-        alignItems:"flex-end"
+        alignItems:"flex-end",
+        flex: 0.07
     },
     chgPassBtn: {
         marginRight:20,

@@ -1,5 +1,6 @@
 import React from "react";
-import  { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import Colors from "../../../constants/colors"
 
 const MainBodyScreen = () => {
   
@@ -16,7 +17,8 @@ const styled = StyleSheet.create({
     wrapper:{
       flex:1,
       alignItems:"center",
-      justifyContent:"center"
+      justifyContent:"center",
+      backgroundColor: Colors.mainBGcolor
     },
     title:{
       fontSize:26
