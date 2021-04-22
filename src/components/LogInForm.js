@@ -8,11 +8,6 @@ import getLogin from "../store/actions/getLogin";
 import getPass from "../store/actions/getPass";
 import getEmail from "../store/actions/getEmail";
 
-const basicUser = {
-  name:'Liza',
-  pass:'13042015'
-}
-
 const LogIn = (props) => {
   
   const logIn = () => {

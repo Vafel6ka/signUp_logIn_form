@@ -1,11 +1,10 @@
 import { GET_LOGIN, GET_PASS, GET_EMAIL } from "../../constants/actionsType"
 
-const initialState = 
-    {
-        username: '',
-        password: '',
-        email: ''
-    }
+const initialState = {
+    username: '',
+    password: '',
+    email: ''
+}
 
 const SignUpReducer = (state = initialState, action) => {
     switch (action.type) {
