@@ -11,6 +11,25 @@ import getEmail from "../store/actions/getEmail";
 
 const SignUpForm = (props) => {
 
+  const Person = Parse.Object.extend('Person');
+
+  function signUp() {
+    // Create a new instance of the user class
+    var user = new Parse.User();
+    user.set("username", props.login.toString());
+    user.set("password", props.password.toString());
+    user.set("email", props.email.toString());
+  
+    // other fields can be set just like with Parse.Object
+    //user.set("phone", "415-392-0202");
+  
+    user.signUp().then(function(user) {
+        console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
+    }).catch(function(error){
+        console.log("Error: " + error.code + " " + error.message);
+    });
+}
+
     return (
         <View style={styled.wrapper}>
             <Text style={styled.title}> SignUp </Text>
@@ -33,13 +52,7 @@ const SignUpForm = (props) => {
               onChangeText = {data => props.getEmailFn(data)}
               />
 
-            <SubmitBtn  text="Confirm" 
-                        onPress={()=>{ 
-                          console.log(props.all);
-                          console.log(props.login);
-                          console.log(props.password);
-                          console.log(props.email);                           
-                        }}/>
+            <SubmitBtn  text="Confirm" onPress={signUp}/>
             
         </View>
     )
