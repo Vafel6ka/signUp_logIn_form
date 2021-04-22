@@ -5,15 +5,16 @@ import InputTextArea from "../components/styleComponents/InputTextArea";
 import SubmitBtn from "./styleComponents/SubmitBtn"
 import LogInForm from "./LogInForm";
 import SignUpForm from "./SignUpForm";
-import ResetPassword from "./ResetPassword"
+import ResetPassword from "./ResetPassword";
 
 const Main = () => {
 
   return (
       <View style={styled.wrapper}>
-          {/* <SignUpForm/> 
-          <LogInForm/> */}
-          <ResetPassword/>
+        {/* <MainScreen/> */}
+          {/* <SignUpForm/>  */}
+          {/* <LogInForm/> */}
+          {/* <ResetPassword/> */}
       </View>
     )
 }
@@ -27,23 +28,3 @@ const styled = StyleSheet.create({
       justifyContent:"center"
     }
   })
-
-  // const Person = Parse.Object.extend('Person');
-
-  // async function initialPerson (name, age) {
-  //   const person = new Person();
-  //   person.set('name', name);
-  //   person.set('age', age);
-  //   person.save();
-  
-  //   const getName = person.get('name');
-  //   }
-  
-  // async function getPersonName (id) {
-  //   const query = new Parse.Query(Person);
-  //   query.get(id).then((person)=>{
-  //     console.log(person.get('name'));
-  //   })
-  // }
-  
-  // getPersonName('A82f5exhU6');

@@ -1,11 +1,22 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import {
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
 import { initializeParse } from "@parse/react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack"
 import Main from "./src/components/Main";
+import { createAppContainer } from "react-navigation";
+import LogInForm from "./src/components/LogInForm";
+import SignUpForm from "./src/components/SignUpForm";
+import ResetPassword from "./src/components/ResetPassword";
+import MainBodyScreen from "./src/components/styleComponents/screens/MainBodyScreen";
+import StartScreen from './src/components/styleComponents/screens/StartScreen';
+
+const Stack = createStackNavigator();
 
 initializeParse(
   'https://parseapi.back4app.com/',
@@ -14,11 +25,36 @@ initializeParse(
 );
 
 const App = () => {
-
   return (
-    <View style={styled.wrapper}>
-      <Main/>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name = 'Home'
+          component = {StartScreen}
+        />
+
+        <Stack.Screen
+          name = 'LogInForm'
+          component = {LogInForm}
+        />
+        
+        <Stack.Screen
+          name = 'MainBodyScreen'
+          component = {MainBodyScreen}
+        />
+
+        <Stack.Screen
+          name = 'SignUpForm'
+          component = {SignUpForm}
+        />
+
+        <Stack.Screen
+          name = 'ResetPassword'
+          component = {ResetPassword}
+        />
+
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
 

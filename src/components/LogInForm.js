@@ -1,5 +1,5 @@
 import React from "react";
-import  { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import Parse from 'parse/react-native.js';
 import InputTextArea from "../components/styleComponents/InputTextArea";
 import SubmitBtn from "./styleComponents/SubmitBtn";
@@ -12,24 +12,32 @@ const LogIn = (props) => {
   
   const logIn = () => {
     let user = Parse.User.logIn(props.username.toString(), props.password.toString())
-      .then(user=>{
+      .then(user => {
         console.log('We get '+ user.get("username") + ' and his email: ' + user.get("email"))
+        props.navigation.navigate('MainBodyScreen')
     })
-      .catch (error => console.log(error, "Error!!!"))
+      .catch (error => {
+        console.log(error, "Error!!!");
+        Alert.alert('Error', 'Something wrong! Try again...')
+      })
   }
 
     return (
         <View style={styled.wrapper}>
             <Text style={styled.title}> LogIn </Text>
-            <InputTextArea  placeholder="username" 
+            <InputTextArea  placeholder = "username" 
                             onChangeText = {data => props.getLoginFn(data)}/>
 
             {/* <InputTextArea placeholder="email"/> */}
 
-            <InputTextArea  placeholder="password"
+            <InputTextArea  placeholder = "password"
                             onChangeText = {data => props.getPassFn(data)}/>
 
-            <SubmitBtn text="Submit" onPress = {logIn}/>
+            <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => props.navigation.navigate('ResetPassword')}>
+              <Text style = {styled.chgPassText}>"Don't remember the password"</Text>
+            </TouchableOpacity>
+
+            <SubmitBtn text = "Submit" onPress = {logIn}/>
         </View>
     )
 }
@@ -41,7 +49,7 @@ const mapStateToProps = (state) => ({
   email: state.userLoginInfo.email
 })
 
-const mapDispatchToProps = (dispatch)=> {
+const mapDispatchToProps = (dispatch) => {
   return {
     getLoginFn: (data) => dispatch(getLogin(data)),
     getPassFn: (data) => dispatch(getPass(data)),
@@ -58,10 +66,17 @@ const styled = StyleSheet.create({
       justifyContent:"center"
     },
     title:{
-      fontSize:26
+      fontSize:26,
+      margin:10
     },
     mailInput: {
-        width:200,
-        textAlign: "center"
+      width:200,
+      textAlign: "center"
+    },
+    chgPassBtn: {
+      margin:10
+    },
+    chgPassText: {
+      fontSize:10
     }
   })
