@@ -11,10 +11,10 @@ import getEmail from "../store/actions/getEmail";
 
 const SignUpForm = (props) => {
 
-  function signUp() {
+  const signUp = () => {
   // Create a new instance of the user class
   let user = new Parse.User();
-  user.set("username", props.login.toString());
+  user.set("username", props.username.toString());
   user.set("password", props.password.toString());
   user.set("email", props.email.toString());
   
@@ -26,15 +26,16 @@ const SignUpForm = (props) => {
   }).catch(function(error){
       console.log("Error: " + error.code + " " + error.message);
   });
+  console.log(props.all);
 }
 
     return (
         <View style={styled.wrapper}>
             <Text style={styled.title}> SignUp </Text>
             
-            <InnerText>Set login</InnerText>
+            <InnerText>Set username</InnerText>
             <InputTextArea 
-              placeholder="login"
+              placeholder="username"
               onChangeText = {data => props.getLoginFn(data)}
               />
       
@@ -58,7 +59,7 @@ const SignUpForm = (props) => {
 
 const mapStateToProps = (state) => ({
   all:state,
-  login: state.userInfo.login,
+  username: state.userInfo.username,
   password: state.userInfo.password,
   email: state.userInfo.email
 })

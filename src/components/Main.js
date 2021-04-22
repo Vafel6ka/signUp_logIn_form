@@ -3,7 +3,7 @@ import  { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-nati
 import Parse from 'parse/react-native.js';
 import InputTextArea from "../components/styleComponents/InputTextArea";
 import SubmitBtn from "./styleComponents/SubmitBtn"
-import LogIn from "./LogInForm";
+import LogInForm from "./LogInForm";
 import SignUpForm from "./SignUpForm"
 
 const Main = () => {
@@ -30,7 +30,8 @@ const Main = () => {
 
     return (
         <View style={styled.wrapper}>
-            <SignUpForm/>
+            {/* <SignUpForm/>  */}
+            <LogInForm/>
         </View>
     )
 }
