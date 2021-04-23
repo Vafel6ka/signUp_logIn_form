@@ -7,11 +7,11 @@ const StartScreen = (props) => {
     return (
         <View style = {styled.wrapper}>
             <View style = {styled.btnBlock}>
-                <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => props.navigation.navigate('LogInForm')}>
+                <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => props.navigation.navigate('Log In')}>
                     <Text style = {styled.chgPassText}>LogIn</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => props.navigation.navigate('SignUpForm')}>
+                <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => props.navigation.navigate('Sign Up')}>
                     <Text style = {styled.chgPassText}>SignUp</Text>
                 </TouchableOpacity>           
             </View>

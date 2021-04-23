@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { initializeParse } from "@parse/react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack"
+import { createStackNavigator } from "@react-navigation/stack";
 import Main from "./src/components/Main";
 import { createAppContainer } from "react-navigation";
 import LogInForm from "./src/components/LogInForm";
@@ -34,22 +34,22 @@ const App = () => {
         />
 
         <Stack.Screen
-          name = 'LogInForm'
+          name = 'Log In'
           component = {LogInForm}
         />
         
         <Stack.Screen
-          name = 'MainBodyScreen'
+          name = 'Main'
           component = {MainBodyScreen}
         />
 
         <Stack.Screen
-          name = 'SignUpForm'
+          name = 'Sign Up'
           component = {SignUpForm}
         />
 
         <Stack.Screen
-          name = 'ResetPassword'
+          name = 'Reset password'
           component = {ResetPassword}
         />
 

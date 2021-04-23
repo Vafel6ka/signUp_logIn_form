@@ -31,9 +31,7 @@ const ResetPassword = (props) => {
             <InnerText>Enter your email</InnerText>
             <InputTextArea  placeholder="Enter email" 
                             onChangeText = {data => {props.getEmailFn(data)}}
-                            keyboardType = "email-address"
-                            spellCheck = "false"    
-                            />
+                            keyboardType = "email-address"/>
 
             <SubmitBtn text="Submit" onPress = {resetPass}/>
         </View>

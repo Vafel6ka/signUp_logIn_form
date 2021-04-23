@@ -52,8 +52,7 @@ const SignUpForm = (props) => {
             <InputTextArea
               keyboardType = "email-address"
               placeholder = "email"
-              onChangeText = {data => props.getEmailFn(data)}
-              spellCheck = "false"/>
+              onChangeText = {data => props.getEmailFn(data)}/>
 
             <SubmitBtn  text="Confirm" onPress={signUp}/>
             
