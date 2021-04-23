@@ -9,7 +9,10 @@ const MainBodyScreen = (props) => {
     const str = props.all.toString()
 
     const UserLogOut = () => {
-      console.log(props.all);
+      Parse.User.logOut().then(() => {
+        const currentUser = Parse.User.current();  // this will now be null
+        console.log(currentUser)
+      });
       props.LogOutFn();
     }
   
