@@ -17,12 +17,29 @@ const LogIn = (props) => {
         console.log('We get '+ user.get("username") + ' and his email: ' + user.get("email"))
         props.navigation.navigate('Main');
         console.log(props.all);
+        getSomethingFromCurrentUser()
         
     })
       .catch (error => {
         console.log(error, "Error!!!");
         Alert.alert('Error', 'Something wrong! Try again...')
       })
+  }
+
+   async function getSomethingFromCurrentUser() {
+    const user = Parse.User.current();
+    // Make a new post
+    const Post = Parse.Object.extend("Post");
+    const post = new Post();
+    post.set("title", "My New Post");
+    post.set("body", "This is some great content.");
+    post.set("user", user);
+    await post.save();
+    // Find all posts by the current user
+    const query = new Parse.Query(Post);
+    query.equalTo("user", user);
+    const userPosts = await query.find().then(data=>console.log(data));
+    // userPosts contains all of the posts by the current user.
   }
 
     return (

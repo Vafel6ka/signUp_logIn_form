@@ -8,6 +8,7 @@ import {
 import { initializeParse } from "@parse/react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { AsyncStorage } from "@react-native-async-storage/async-storage"
 import Main from "./src/components/Main";
 import { createAppContainer } from "react-navigation";
 import LogInForm from "./src/components/LogInForm";
@@ -17,7 +18,8 @@ import MainBodyScreen from "./src/components/styleComponents/screens/MainBodyScr
 import StartScreen from './src/components/styleComponents/screens/StartScreen';
 
 const Stack = createStackNavigator();
-
+const Parse = require('parse/react-native.js');
+Parse.setAsyncStorage(AsyncStorage);
 initializeParse(
   'https://parseapi.back4app.com/',
   'hsoB8AZOkEUBhqVa6TDdoIbA6GoiBvmZAxun56Bf',
