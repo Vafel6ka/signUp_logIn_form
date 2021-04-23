@@ -1,24 +1,34 @@
 import React from "react";
-import  { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Colors from "../../../constants/colors"
+import  { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import Colors from "../../../constants/colors";
+import Log__Btn from "../Log__Btn"
 
 const StartScreen = (props) => {
   
     return (
         <View style = {styled.wrapper}>
             <View style = {styled.btnBlock}>
-                <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => props.navigation.navigate('Log In')}>
-                    <Text style = {styled.chgPassText}>LogIn</Text>
-                </TouchableOpacity>
+                <Log__Btn onPress = {() => props.navigation.navigate('Log In')}>
+                    LogIn
+                </Log__Btn>    
 
-                <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => props.navigation.navigate('Sign Up')}>
-                    <Text style = {styled.chgPassText}>SignUp</Text>
-                </TouchableOpacity>           
+                <Log__Btn onPress = {() => props.navigation.navigate('Sign Up')}>
+                    SignUp
+                </Log__Btn>       
             </View>
 
             <View style={styled.titleBlock}>
-                <Text style = {styled.title}> Start screen!!! </Text>
+                <View>
+                    <Text style = {styled.title}> Start screen!!! </Text>
+                </View>
+
+                <View style={styled.titleImgBox}>
+                    <Image  source = {require('../../../assets/imgs/jura_bg_img.jpg')}
+                            resizeMode = "cover"
+                            style = {styled.titleImg}/>
+                </View>
             </View>
+
         </View>
     )
 }
@@ -26,16 +36,29 @@ const StartScreen = (props) => {
 export default StartScreen;
 
 const styled = StyleSheet.create({
-    wrapper:{
-      flex: 1,
-      backgroundColor: Colors.mainBGcolor
+    wrapper: {
+        flex: 1,
+        backgroundColor: Colors.mainBGcolor,
+    },
+    titleImgBox: {
+        height: 300,
+        width: 300,
+        borderColor:"black",
+        borderWidth:3,
+        borderRadius:200,
+        overflow:"hidden"  
+    },
+    titleImg: {
+        flex: 1,
+        width: "100%",
+        height: "100%",
     },
     titleBlock: {
-        flex:0.93,
+        flex:0.6,
         alignItems: "center",
         justifyContent:"center",
     },
-    title:{
+    title: {
       fontSize: 26,
       alignSelf: "center",
       paddingBottom: '20%'
