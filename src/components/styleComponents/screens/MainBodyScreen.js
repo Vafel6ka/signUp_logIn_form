@@ -17,6 +17,7 @@ const MainBodyScreen = (props) => {
       });
       props.LogOutFn();
     }
+    let _switch = 'false'
 
     async function getSomethingFromCurrentUser(str) {
       const user = Parse.User.current();
@@ -34,21 +35,23 @@ const MainBodyScreen = (props) => {
       query.equalTo("user", user);
       const userPosts = await query.find()
       userPosts.map(item => {
-        console.log(item)
+        //console.log(item)
         props.getPostsDataFn(item.attributes)
-        console.log(props.all)
+        console.log(props.all.userDataPosts.arr[0])
+        _switch = 'true'
       } )
       
       // userPosts contains all of the posts by the current user.   
       
     }
-
-    const ShowPosts = (props) => {
-      const { arr } = props 
-      return arr.map( item => {
-        <Text> {item.title} </Text>;
-        <Text> {item.body} </Text>;
-      })
+    
+    const ShowPosts = () => {
+      let arr = props.all.userDataPosts.arr
+      if (arr.length > 0) 
+         {return (<Text>{props.all.userDataPosts.arr[0].title}</Text>)} 
+      else {
+        return (<Text> FFF </Text>)
+      }
     }
 
     return (
@@ -62,15 +65,12 @@ const MainBodyScreen = (props) => {
                     getState
                 </Log__Btn>
 
-                <Log__Btn onPress = {UserLogOut}>
-                    LogOut
-                </Log__Btn>
             </View>
  
             <View style={styled.titleBlock}>
                 <Text style = {styled.title}> Initial screen!!! </Text>
                 <Text>{str}</Text>
-                <ShowPosts />
+                <ShowPosts/>
             </View>
         </View>
     )

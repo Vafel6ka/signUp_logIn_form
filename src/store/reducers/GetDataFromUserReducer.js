@@ -7,7 +7,7 @@ const initialState = {
 const GetDataFromUserReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_POST_DATA:
-            return {...state, arr: [...state.arr, action.payload]}
+            return {...state, arr: [...state.arr, action.payload]}      
         
         default: return state
     }
