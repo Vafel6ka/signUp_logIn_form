@@ -47,8 +47,7 @@ const MainBodyScreen = (props) => {
     
     const ShowPosts = () => {
       let arr = props.all.userDataPosts.arr
-      if (arr.length > 0) 
-         {return (<Text>{props.all.userDataPosts.arr[0].title}</Text>)} 
+      if (arr.length > 0) {return (arr.map((item, i) => (<Text key = {i} >{item.title}</Text>)))}
       else {
         return (<Text> FFF </Text>)
       }
