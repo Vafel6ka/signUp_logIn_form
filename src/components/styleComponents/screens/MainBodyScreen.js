@@ -4,11 +4,12 @@ import Colors from "../../../constants/colors";
 import Parse from 'parse/react-native.js';
 import { connect } from "react-redux";
 import LogOut from "../../../store/actions/logOut";
-import Log__Btn from "../Log__Btn"
+import Log__Btn from "../Log__Btn";
+import getPostsData from "../../../store/actions/getPostsData"
 
 const MainBodyScreen = (props) => {
-    const str = props.all.toString()
-
+    const str = '';
+    const tempObj = ''
     const UserLogOut = () => {
       Parse.User.logOut().then(() => {
         const currentUser = Parse.User.current();  // this will now be null
@@ -17,7 +18,7 @@ const MainBodyScreen = (props) => {
       props.LogOutFn();
     }
 
-    async function getSomethingFromCurrentUser() {
+    async function getSomethingFromCurrentUser(str) {
       const user = Parse.User.current();
       // Make a new post
   
@@ -31,10 +32,25 @@ const MainBodyScreen = (props) => {
       // Find all posts by the current user
       const query = new Parse.Query(Post);
       query.equalTo("user", user);
-      const userPosts = await query.find().then(data=>console.log(data));
-      // userPosts contains all of the posts by the current user.
+      const userPosts = await query.find()
+      userPosts.map(item => {
+        console.log(item)
+        props.getPostsDataFn(item.attributes)
+        console.log(props.all)
+      } )
+      
+      // userPosts contains all of the posts by the current user.   
+      
     }
-  
+
+    const ShowPosts = (props) => {
+      const { arr } = props 
+      return arr.map( item => {
+        <Text> {item.title} </Text>;
+        <Text> {item.body} </Text>;
+      })
+    }
+
     return (
         <View style={styled.wrapper}>
             <View style = {styled.btnBlock}>
@@ -45,23 +61,29 @@ const MainBodyScreen = (props) => {
                 <Log__Btn onPress = {getSomethingFromCurrentUser}>
                     getState
                 </Log__Btn>
+
+                <Log__Btn onPress = {UserLogOut}>
+                    LogOut
+                </Log__Btn>
             </View>
  
             <View style={styled.titleBlock}>
                 <Text style = {styled.title}> Initial screen!!! </Text>
                 <Text>{str}</Text>
+                <ShowPosts />
             </View>
         </View>
     )
 }
 
 const mapStateToProps = (state) => ({
-  all:state,
+  all: state,
 })
 
 const mapDispatchToProps = (dispatch) => {
   return {
     LogOutFn: () => dispatch(LogOut()),
+    getPostsDataFn: (data) => dispatch(getPostsData(data))
   }
 }
 
