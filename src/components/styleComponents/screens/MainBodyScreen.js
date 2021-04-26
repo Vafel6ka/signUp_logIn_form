@@ -39,7 +39,12 @@ const MainBodyScreen = (props) => {
       // Find all posts by the current user
       const query = new Parse.Query(Post);
       query.equalTo("user", user);
-      const userPosts = await query.find()
+      const userPosts = await query.find();
+
+      //clear state.arr
+      let clearArr = props.all.userDataPosts.arr;
+      clearArr.splice(0,clearArr.length);
+
       userPosts.map(item => {
         //console.log(item)
         props.getPostsDataFn(item.attributes)
