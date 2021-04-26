@@ -1,11 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import Colors from "../../../constants/colors";
 import Parse from 'parse/react-native.js';
 import { connect } from "react-redux";
 import LogOut from "../../../store/actions/logOut";
 import Log__Btn from "../Log__Btn";
 import getPostsData from "../../../store/actions/getPostsData"
+import PostsList from "../PostsList"
 
 const MainBodyScreen = (props) => {
     const str = '';
@@ -17,19 +18,24 @@ const MainBodyScreen = (props) => {
       });
       props.LogOutFn();
     }
-    let _switch = 'false'
 
-    async function getSomethingFromCurrentUser(str) {
+    async function creatPost() {
       const user = Parse.User.current();
-      // Make a new post
+      const Post = Parse.Object.extend("Post");
+            const post = new Post();
+            
+            post.set("title", `My New Post ${Math.random()}`);
+            post.set("body", `This is some great content. ${Math.random()}`);
+            post.set("user", user);
+            await post.save();
+      }
+
+    async function getAllPosts() {
+      const user = Parse.User.current();
+      
   
       const Post = Parse.Object.extend("Post");
-            // const post = new Post();
-            // post.set("title", "My New Post");
-            // post.set("body", "This is some great content.");
-            // post.set("user", user);
-            // await post.save();
-  
+
       // Find all posts by the current user
       const query = new Parse.Query(Post);
       query.equalTo("user", user);
@@ -37,21 +43,24 @@ const MainBodyScreen = (props) => {
       userPosts.map(item => {
         //console.log(item)
         props.getPostsDataFn(item.attributes)
-        console.log(props.all.userDataPosts.arr[0])
-        _switch = 'true'
+        console.log(props.all.userDataPosts.arr)
+        
       } )
       
       // userPosts contains all of the posts by the current user.   
       
     }
     
-    const ShowPosts = () => {
-      let arr = props.all.userDataPosts.arr
-      if (arr.length > 0) {return (arr.map((item, i) => (<Text key = {i} >{item.title}</Text>)))}
+    const ShowPosts = ( {arr} ) => {
+      
+      if (arr.length > 0) {return (arr.map((item, i) => (<PostsList key = {i}>{i}) {item.title}: {item.body}</PostsList>)))}
       else {
-        return (<Text> FFF </Text>)
+        return (
+        <PostsList>No data</PostsList>
+          )
       }
     }
+    
 
     return (
         <View style={styled.wrapper}>
@@ -60,16 +69,23 @@ const MainBodyScreen = (props) => {
                     LogOut
                 </Log__Btn>
 
-                <Log__Btn onPress = {getSomethingFromCurrentUser}>
-                    getState
+                <Log__Btn onPress = {creatPost}>
+                    addPost
+                </Log__Btn>
+
+                <Log__Btn onPress = {getAllPosts}>
+                    getAllPosts
                 </Log__Btn>
 
             </View>
  
             <View style={styled.titleBlock}>
-                <Text style = {styled.title}> Initial screen!!! </Text>
-                <Text>{str}</Text>
-                <ShowPosts/>
+                <Text style = {styled.title}> Posts list </Text>
+                
+                <ScrollView style = {styled.postListBox}>
+                  <ShowPosts arr = {props.all.userDataPosts.arr}/>
+                </ScrollView>
+                
             </View>
         </View>
     )
@@ -94,18 +110,15 @@ const styled = StyleSheet.create({
     backgroundColor: Colors.mainBGcolor
   },
   titleBlock: {
-      flex:0.93,
       alignItems: "center",
       justifyContent:"center",
   },
   title:{
+    margin:"10%",
     fontSize: 26,
-    alignSelf: "center",
-    paddingBottom: '20%'
   },
   btnBlock: {
       alignItems:"flex-end",
-      flex: 0.07
   },
   chgPassBtn: {
       marginRight:20,
@@ -115,5 +128,5 @@ const styled = StyleSheet.create({
         width:40,
       fontSize: 10,
       textAlign: "center"
-  }
+  },
 })
