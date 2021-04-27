@@ -18,6 +18,7 @@ const MainBodyScreen = (props) => {
         console.log(currentUser)
       });
       props.LogOutFn();
+      props.navigation.navigate('Home')
     }
 
     async function creatPost() {
@@ -26,6 +27,7 @@ const MainBodyScreen = (props) => {
             const post = new Post();
             post.set("title", props.all.sendPost.title);
             post.set("body", props.all.sendPost.body);
+            post.set('name', props.all.userInfo.username);
             post.set("user", user);
             await post.save();
       console.log(props.all)
@@ -39,7 +41,7 @@ const MainBodyScreen = (props) => {
 
       // Find all posts by the current user
       const query = new Parse.Query(Post);
-      query.equalTo("user", user);
+      // query.equalTo("user", user);
       const userPosts = await query.find();
 
       //clear state.arr
@@ -59,7 +61,7 @@ const MainBodyScreen = (props) => {
     
     const ShowPosts = ( {arr} ) => {
       
-      if (arr.length > 0) {return (arr.map((item, i) => (<PostsList key = {i}>{i}) {item.title}: {item.body}</PostsList>)))}
+      if (arr.length > 0) {return (arr.map((item, i) => (<PostsList postId = {item.objectId} user = {item.name} title = {item.title} time = {item.createdAt.toString().slice(0, -40)} body = {item.body}/>)))}
       else {
         return (
         <PostsList>No data</PostsList>
@@ -75,25 +77,20 @@ console.log(props.all)
                     LogOut
                 </Log__Btn>
 
-                <Log__Btn onPress = {creatPost}>
-                    addPost
-                </Log__Btn>
-
                 <Log__Btn onPress = {getAllPosts}>
                     getAllPosts
                 </Log__Btn>
 
             </View>
-            <View>
-              <InputPostForm send = {creatPost}/>
-            </View>
-            <View style={styled.titleBlock}>
+            <View style={styled.postBlock}>
                 <Text style = {styled.title}> Posts list </Text>
                 
                 <ScrollView style = {styled.postListBox}>
                   <ShowPosts arr = {props.all.userDataPosts.arr}/>
                 </ScrollView>
-                
+            </View>
+            <View style={styled.inputPostForm}>
+              <InputPostForm send = {creatPost}/>
             </View>
         </View>
     )
@@ -117,24 +114,42 @@ const styled = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.mainBGcolor
   },
-  titleBlock: {
-      alignItems: "center",
-      justifyContent:"center",
+  postBlock: {
+    flex: 0.55,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  postListContent: {
+    flex: 1,
+    width: "100%",
   },
   title:{
-    margin:"10%",
-    fontSize: 26,
+    flex: 0.2,
+    fontSize: 26
   },
   btnBlock: {
-      alignItems:"flex-end",
+    flex: 0.15,
+    alignItems:"flex-end",
   },
   chgPassBtn: {
-      marginRight:20,
-      marginTop:10
+    marginRight:20,
+    marginTop:10
   },
     chgPassText: {
-        width:40,
-      fontSize: 10,
-      textAlign: "center"
+    width:40,
+    fontSize: 10,
+    textAlign: "center"
   },
+  inputPostForm: {
+    flex: 0.3,
+    alignItems: "center"
+  },
+  postListBox: {
+    flex: 0.8,
+    margin: 5,
+    padding: 5,
+    backgroundColor: Colors.mainBGcolor,
+    width: "97%",
+    minHeight: "10%"
+  }
 })

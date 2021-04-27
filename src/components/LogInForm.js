@@ -14,7 +14,7 @@ const LogIn = (props) => {
   const logIn = () => {
     let user = Parse.User.logIn(props.username.toString(), props.password.toString())
       .then(user => {
-        console.log('We get '+ user.get("username") + ' and his email: ' + user.get("email"))
+        console.log('We get '+ user.get("username") + ' and his email: ' + user.get("email"));
         props.navigation.navigate('Main');
         console.log(props.all);
         

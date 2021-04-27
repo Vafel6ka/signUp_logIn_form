@@ -4,6 +4,7 @@ import SubmitBtn from "./SubmitBtn";
 import enterPostTitle from "../../store/actions/enterPostTitle";
 import enterPostBody from "../../store/actions/enterPostBody";
 import { connect } from "react-redux";
+import Colors from "../../constants/colors"
 
 const InputPostForm = (props) => {
     return (
@@ -76,6 +77,6 @@ const styled = StyleSheet.create({
         width: "100%",
         height: 80,
         padding: 5,
-        flexWrap: "nowrap"
+        flexWrap: "nowrap",
     }
 })

@@ -1,10 +1,16 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
+import Colors from "../../constants/colors"
 
 const PostsList = (props) => {
     return (
         <View {...props} style={{...props.style,...styled.viewBox}}>
-            <Text style={styled.innerText}> {props.children} </Text>
+            <View style = {{alignItems: "center"}}>
+                <Text key = {props.postId} style={styled.user}> {props.user} </Text>
+            </View>
+            <Text key = {props.postId} style={styled.title}> {props.title} </Text>
+            <Text key = {props.postId} style={styled.time}> {props.time} </Text>
+            <Text key = {props.postId} style={styled.body}> {props.body} </Text>
         </View>
         
     )   
@@ -14,18 +20,23 @@ export default PostsList
 
 const styled = StyleSheet.create({
     viewBox: {
-        alignItems: "center",
+        alignItems: "flex-start",
         justifyContent:"center",
         padding: 5,
         margin: 5,
         shadowOpacity: 0.16,
         shadowColor: "black",
         shadowRadius:5,
-        backgroundColor:"white",
+        backgroundColor: Colors.mainBGcolor,
         borderRadius:10   
       },
-      innerText: {
-          fontSize: 16,
-          margin: 3,
-      }
+      title: {
+        fontSize: 16,
+      },
+      time: {
+        fontSize: 10,
+      },
+      body: {
+        fontSize: 14
+      },
 })
