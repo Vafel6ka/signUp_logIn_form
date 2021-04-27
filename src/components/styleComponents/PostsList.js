@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
-import Colors from "../../constants/colors"
+import Colors from "../../constants/colors";
+import SubmitBtn from "../styleComponents/SubmitBtn"
 
 const PostsList = (props) => {
     return (
@@ -11,6 +12,7 @@ const PostsList = (props) => {
             <Text key = {props.postId} style={styled.title}> {props.title} </Text>
             <Text key = {props.postId} style={styled.time}> {props.time} </Text>
             <Text key = {props.postId} style={styled.body}> {props.body} </Text>
+            <SubmitBtn text = "Del" onPress = {props.onPress}/>
         </View>
         
     )   

@@ -8,6 +8,7 @@ import Log__Btn from "../Log__Btn";
 import getPostsData from "../../../store/actions/getPostsData"
 import PostsList from "../PostsList";
 import InputPostForm from "../InputPostForm";
+import getPostsIdData from "../../../store/actions/getPostsIdData"
 
 const MainBodyScreen = (props) => {
     const str = '';
@@ -30,13 +31,27 @@ const MainBodyScreen = (props) => {
             post.set('name', props.all.userInfo.username);
             post.set("user", user);
             await post.save();
-      console.log(props.all)
+           console.log(props.all)
       }
+
+    async function removePost(id) {
+      const Post = Parse.Object.extend("Post");
+      const query = new Parse.Query(Post);
+      query.equalTo("objectId", id);
+      const result = await query.find();
+      console.log(result[0])
+      //destroy
+      result[0].destroy().then(() => {
+        console.log('delet post');
+      }, (error) => {
+        // The delete failed.
+        // error is a Parse.Error with an error code and message.
+        });
+    }
 
     async function getAllPosts() {
       const user = Parse.User.current();
       console.log(props.all)
-  
       const Post = Parse.Object.extend("Post");
 
       // Find all posts by the current user
@@ -49,9 +64,10 @@ const MainBodyScreen = (props) => {
       clearArr.splice(0,clearArr.length);
 
       userPosts.map(item => {
-        console.log(item.attributes)
+        console.log(item.id)
         props.getPostsDataFn(item.attributes)
-        console.log(props.all.userDataPosts)
+        props.getPostsIdDataFn(item.id)
+        console.log(props.all)
         
       } )
       
@@ -59,9 +75,17 @@ const MainBodyScreen = (props) => {
       
     }
     
-    const ShowPosts = ( {arr} ) => {
+    const ShowPosts = ( {arr1, arr2} ) => {
       
-      if (arr.length > 0) {return (arr.map((item, i) => (<PostsList postId = {item.objectId} user = {item.name} title = {item.title} time = {item.createdAt.toString().slice(0, -40)} body = {item.body}/>)))}
+      if (arr1.length > 0) {return (arr1.map((item, i) => (
+        <PostsList  postId = {item.objectId} 
+                    user = {item.name} 
+                    title = {item.title} 
+                    time = {item.createdAt.toString().slice(0, -40)} 
+                    body = {item.body}
+                    onPress = {()=>console.log(arr2[i])}  
+                    />
+        )))}
       else {
         return (
         <PostsList>No data</PostsList>
@@ -86,7 +110,7 @@ console.log(props.all)
                 <Text style = {styled.title}> Posts list </Text>
                 
                 <ScrollView style = {styled.postListBox}>
-                  <ShowPosts arr = {props.all.userDataPosts.arr}/>
+                  <ShowPosts arr1 = {props.all.userDataPosts.arr} arr2 = {props.all.userDataPosts.id}/>
                 </ScrollView>
             </View>
             <View style={styled.inputPostForm}>
@@ -103,7 +127,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     LogOutFn: () => dispatch(LogOut()),
-    getPostsDataFn: (data) => dispatch(getPostsData(data))
+    getPostsDataFn: (data) => dispatch(getPostsData(data)),
+    getPostsIdDataFn: (data) => dispatch(getPostsIdData(data))
   }
 }
 
