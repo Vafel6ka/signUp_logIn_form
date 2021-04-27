@@ -1,12 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Colors from "../../../constants/colors";
 import Parse from 'parse/react-native.js';
 import { connect } from "react-redux";
 import LogOut from "../../../store/actions/logOut";
 import Log__Btn from "../Log__Btn";
 import getPostsData from "../../../store/actions/getPostsData"
-import PostsList from "../PostsList"
+import PostsList from "../PostsList";
+import InputPostForm from "../InputPostForm";
 
 const MainBodyScreen = (props) => {
     const str = '';
@@ -23,16 +24,16 @@ const MainBodyScreen = (props) => {
       const user = Parse.User.current();
       const Post = Parse.Object.extend("Post");
             const post = new Post();
-            
-            post.set("title", `My New Post ${Math.random()}`);
-            post.set("body", `This is some great content. ${Math.random()}`);
+            post.set("title", props.all.sendPost.title);
+            post.set("body", props.all.sendPost.body);
             post.set("user", user);
             await post.save();
+      console.log(props.all)
       }
 
     async function getAllPosts() {
       const user = Parse.User.current();
-      
+      console.log(props.all)
   
       const Post = Parse.Object.extend("Post");
 
@@ -46,9 +47,9 @@ const MainBodyScreen = (props) => {
       clearArr.splice(0,clearArr.length);
 
       userPosts.map(item => {
-        //console.log(item)
+        console.log(item.attributes)
         props.getPostsDataFn(item.attributes)
-        console.log(props.all.userDataPosts.arr)
+        console.log(props.all.userDataPosts)
         
       } )
       
@@ -66,7 +67,7 @@ const MainBodyScreen = (props) => {
       }
     }
     
-
+console.log(props.all)
     return (
         <View style={styled.wrapper}>
             <View style = {styled.btnBlock}>
@@ -83,7 +84,9 @@ const MainBodyScreen = (props) => {
                 </Log__Btn>
 
             </View>
- 
+            <View>
+              <InputPostForm send = {creatPost}/>
+            </View>
             <View style={styled.titleBlock}>
                 <Text style = {styled.title}> Posts list </Text>
                 
