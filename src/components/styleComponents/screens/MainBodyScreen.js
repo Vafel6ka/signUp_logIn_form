@@ -31,7 +31,7 @@ const MainBodyScreen = (props) => {
             post.set('name', props.all.userInfo.username);
             post.set("user", user);
             await post.save();
-           console.log(props.all)
+          console.log(props.all)
       }
 
     async function removePost(id) {
@@ -39,10 +39,10 @@ const MainBodyScreen = (props) => {
       const query = new Parse.Query(Post);
       query.equalTo("objectId", id);
       const result = await query.find();
-      console.log(result[0])
+      // console.log(result[0])
       //destroy
       result[0].destroy().then(() => {
-        console.log('delet post');
+        // console.log('delet post');
       }, (error) => {
         // The delete failed.
         // error is a Parse.Error with an error code and message.
@@ -51,7 +51,7 @@ const MainBodyScreen = (props) => {
 
     async function getAllPosts() {
       const user = Parse.User.current();
-      console.log(props.all)
+      // console.log(props.all)
       const Post = Parse.Object.extend("Post");
 
       // Find all posts by the current user
@@ -61,13 +61,11 @@ const MainBodyScreen = (props) => {
 
       //clear state.arr
       let clearArr = props.all.userDataPosts.arr;
-      clearArr.splice(0,clearArr.length);
+      clearArr.splice(0,clearArr.length+1);
 
       userPosts.map(item => {
-        console.log(item.id)
-        props.getPostsDataFn(item.attributes)
-        props.getPostsIdDataFn(item.id)
-        console.log(props.all)
+        /////////////////////////////////ALL PARSE OBJECT ADDD IN ARR!!!!!!!!!
+        props.getPostsDataFn(item)
         
       } )
       
@@ -75,15 +73,14 @@ const MainBodyScreen = (props) => {
       
     }
     
-    const ShowPosts = ( {arr1, arr2} ) => {
-      
-      if (arr1.length > 0) {return (arr1.map((item, i) => (
-        <PostsList  postId = {item.objectId} 
-                    user = {item.name} 
-                    title = {item.title} 
+    const ShowPosts = ( {arr} ) => {
+      console.log(arr.length)
+      if (arr.length > 0) {return (arr.map((item, i) => (
+        <PostsList  user = {item.attributes.name} 
+                    title = {item.attributes.title} 
                     time = {item.createdAt.toString().slice(0, -40)} 
-                    body = {item.body}
-                    onPress = {()=>console.log(arr2[i])}  
+                    body = {item.attributes.body}
+                    onPress = {()=>removePost(item.id)}  
                     />
         )))}
       else {
@@ -110,7 +107,7 @@ console.log(props.all)
                 <Text style = {styled.title}> Posts list </Text>
                 
                 <ScrollView style = {styled.postListBox}>
-                  <ShowPosts arr1 = {props.all.userDataPosts.arr} arr2 = {props.all.userDataPosts.id}/>
+                  <ShowPosts arr = {props.all.userDataPosts.arr}/>
                 </ScrollView>
             </View>
             <View style={styled.inputPostForm}>

@@ -5,13 +5,13 @@ import SubmitBtn from "../styleComponents/SubmitBtn"
 
 const PostsList = (props) => {
     return (
-        <View {...props} style={{...props.style,...styled.viewBox}}>
+        <View  key = {props.postId} {...props} style={{...props.style,...styled.viewBox}}>
             <View style = {{alignItems: "center"}}>
-                <Text key = {props.postId} style={styled.user}> {props.user} </Text>
+                <Text style={styled.user}> {props.user} </Text>
             </View>
-            <Text key = {props.postId} style={styled.title}> {props.title} </Text>
-            <Text key = {props.postId} style={styled.time}> {props.time} </Text>
-            <Text key = {props.postId} style={styled.body}> {props.body} </Text>
+            <Text style={styled.title}> {props.title} </Text>
+            <Text style={styled.time}> {props.time} </Text>
+            <Text style={styled.body}> {props.body} </Text>
             <SubmitBtn text = "Del" onPress = {props.onPress}/>
         </View>
         
